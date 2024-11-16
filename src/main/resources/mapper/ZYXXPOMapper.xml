@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.qxnvc.textbooks.mapper.ZYXXPOMapper">
+
+    <resultMap id="BaseResultMap" type="cn.qxnvc.textbooks.model.ZYXXPO">
+        <result column="bmmc" jdbcType="VARCHAR" property="bmmc"/>
+        <result column="zymc" jdbcType="VARCHAR" property="zymc"/>
+        <result column="zydm" jdbcType="VARCHAR" property="zydm"/>
+        <result column="zycl" jdbcType="VARCHAR" property="zycl"/>
+        <result column="xz" jdbcType="INTEGER" property="xz"/>
+        <result column="zydl" jdbcType="VARCHAR" property="zydl"/>
+        <result column="zyl" jdbcType="VARCHAR" property="zyl"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        bmmc, zymc, zydm, zycl, xz, zydl, zyl
+    </sql>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select 
+        <include refid="Base_Column_List"/>
+        from zyxx_tb
+    </select>
+
+    <select id="selectByZydm" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select 
+        <include refid="Base_Column_List"/>
+        from zyxx_tb
+        where zydm = #{zydm}
+    </select>
+
+    <insert id="insert" parameterType="cn.qxnvc.textbooks.model.ZYXXPO">
+        insert into zyxx_tb
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="bmmc != null">bmmc,</if>
+            <if test="zymc != null">zymc,</if>
+            <if test="zydm != null">zydm,</if>
+            <if test="zycl != null">zycl,</if>
+            <if test="xz != null">xz,</if>
+            <if test="zydl != null">zydl,</if>
+            <if test="zyl != null">zyl,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="bmmc != null">#{bmmc},</if>
+            <if test="zymc != null">#{zymc},</if>
+            <if test="zydm != null">#{zydm},</if>
+            <if test="zycl != null">#{zycl},</if>
+            <if test="xz != null">#{xz},</if>
+            <if test="zydl != null">#{zydl},</if>
+            <if test="zyl != null">#{zyl},</if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="cn.qxnvc.textbooks.model.ZYXXPO">
+        update zyxx_tb
+        <set>
+            <if test="bmmc != null">bmmc = #{bmmc},</if>
+            <if test="zymc != null">zymc = #{zymc},</if>
+            <if test="zycl != null">zycl = #{zycl},</if>
+            <if test="xz != null">xz = #{xz},</if>
+            <if test="zydl != null">zydl = #{zydl},</if>
+            <if test="zyl != null">zyl = #{zyl},</if>
+        </set>
+        where zydm = #{zydm}
+    </update>
+
+    <delete id="deleteByZydm" parameterType="java.lang.String">
+        delete from zyxx_tb
+        where zydm = #{zydm}
+    </delete>
+
+</mapper> 

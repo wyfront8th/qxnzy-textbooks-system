@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.qxnvc.textbooks.mapper.XBXXPOMapper">
+    <resultMap id="BaseResultMap" type="cn.qxnvc.textbooks.model.XBXXPO">
+        <id column="bmbm" jdbcType="VARCHAR" property="bmbm"/>
+        <result column="bmmc" jdbcType="VARCHAR" property="bmmc"/>
+        <result column="xxmc" jdbcType="VARCHAR" property="xxmc"/>
+        <result column="dwzn" jdbcType="VARCHAR" property="dwzn"/>
+        <result column="sfkkdw" jdbcType="BOOLEAN" property="sfkkdw"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        bmbm,
+        bmmc,
+        xxmc,
+        dwzn,
+        sfkkdw
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from xbxx_tb
+        where bmbm = #{bmbm,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete
+        from xbxx_tb
+        where bmbm = #{bmbm,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="cn.qxnvc.textbooks.model.XBXXPO">
+        insert into xbxx_tb (bmbm, bmmc, xxmc,
+                             dwzn, sfkkdw)
+        values (#{bmbm,jdbcType=VARCHAR}, #{bmmc,jdbcType=VARCHAR}, #{xxmc,jdbcType=VARCHAR}, #{dwzn,jdbcType=VARCHAR}, #{sfkkdw,jdbcType=BOOLEAN})
+    </insert>
+    <insert id="insertSelective" parameterType="cn.qxnvc.textbooks.model.XBXXPO">
+        insert into xbxx_tb
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="bmbm != null">
+                bmbm,
+            </if>
+            <if test="bmmc != null">
+                bmmc,
+            </if>
+            <if test="xxmc != null">
+                xxmc,
+            </if>
+            <if test="dwzn != null">
+                dwzn,
+            </if>
+            <if test="sfkkdw != null">
+                sfkkdw,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="bmbm != null"> #{bmbm,jdbcType=VARCHAR},
+            </if>
+            <if test="bmmc != null"> #{bmmc,jdbcType=VARCHAR},
+            </if>
+            <if test="xxmc != null"> #{xxmc,jdbcType=VARCHAR},
+            </if>
+            <if test="dwzn != null"> #{dwzn,jdbcType=VARCHAR},
+            </if>
+            <if test="sfkkdw != null"> #{sfkkdw,jdbcType=BOOLEAN},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.qxnvc.textbooks.model.XBXXPO">
+        update xbxx_tb
+        <set>
+            <if test="bmmc != null">
+                bmmc = #{bmmc,jdbcType=VARCHAR},
+            </if>
+            <if test="xxmc != null">
+                xxmc = #{xxmc,jdbcType=VARCHAR},
+            </if>
+            <if test="dwzn != null">
+                dwzn = #{dwzn,jdbcType=VARCHAR},
+            </if>
+            <if test="sfkkdw != null">
+                sfkkdw = #{sfkkdw,jdbcType=BOOLEAN},
+            </if>
+        </set>
+        where bmbm = #{bmbm,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.qxnvc.textbooks.model.XBXXPO">
+        <!--@mbg.generated-->
+        update xbxx_tb
+        set bmmc   = #{bmmc,jdbcType=VARCHAR},
+            xxmc   = #{xxmc,jdbcType=VARCHAR},
+            dwzn   = #{dwzn,jdbcType=VARCHAR},
+            sfkkdw = #{sfkkdw,jdbcType=BOOLEAN}
+        where bmbm = #{bmbm,jdbcType=VARCHAR}
+    </update>
+    <!-- 查询所有部门信息 -->
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from xbxx_tb
+    </select>
+    <!-- 多条件选择   -->
+    <select id="selectByCondition" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from xbxx_tb
+        <where>
+            <if test="bmmc != null">
+                and bmmc like concat('%',#{bmmc,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+    </select>
+    <!-- 批量插入  -->
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into xbxx_tb (bmbm, bmmc, xxmc, dwzn, sfkkdw)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.bmbm}, #{item.bmmc}, #{item.xxmc}, #{item.dwzn}, #{item.sfkkdw})
+        </foreach>
+    </insert>
+    <!-- 批量删除 -->
+    <delete id="deleteBatch" parameterType="java.util.List">
+        delete from xbxx_tb where bmbm in
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+</mapper>
